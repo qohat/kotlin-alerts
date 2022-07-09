@@ -13,7 +13,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 }
 
 application {
-    mainClass.set("io.github.qohat.MainKt")
+    mainClass by "io.github.qohat.MainKt"
 }
 
 sqldelight {
@@ -25,7 +25,7 @@ sqldelight {
 
 allprojects {
     extra.set("dokka.outputDirectory", rootDir.resolve("docs"))
-    //setupDetekt()
+    setupDetekt()
 }
 
 repositories {
