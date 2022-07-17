@@ -4,7 +4,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
     application
     alias(libs.plugins.kotest.multiplatform)
     id(libs.plugins.kotlin.jvm.pluginId)
-    alias(libs.plugins.arrowGradleConfig.formatter)
     alias(libs.plugins.dokka)
     id(libs.plugins.detekt.pluginId)
     alias(libs.plugins.kover)
@@ -69,6 +68,7 @@ dependencies {
     implementation(libs.hikari)
     implementation(libs.postgresql)
     implementation(libs.slugify)
+    implementation(libs.bcrypt)
 
     testImplementation(libs.ktor.client.content.negotiation)
     testImplementation(libs.ktor.client.serialization)

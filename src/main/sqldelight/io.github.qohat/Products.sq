@@ -15,38 +15,38 @@ CREATE TABLE IF NOT EXISTS products(
 
 amountOfArticleForAuthor:
 SELECT COUNT(id)
-FROM articles
+FROM products
 WHERE author_id = :authorId;
 
-selectArticlesOfAuthor:
+selectproductsOfAuthor:
 SELECT id, slug, title, description, body, author_id, createdAt, updatedAt
-FROM articles
+FROM products
 WHERE author_id = :authorId
 ORDER BY createdAt DESC
 LIMIT :limit OFFSET :offset;
 
 update:
-UPDATE articles
+UPDATE products
 SET title = :title, description = :description, body = :body;
 
 insertAndGetId:
-INSERT INTO articles(slug, title, description, body, author_id, createdAt, updatedAt)
+INSERT INTO products(slug, title, description, body, author_id, createdAt, updatedAt)
 VALUES (:slug, :title, :description, :body, :authorId, :createdAt, :updatedAt)
 RETURNING id;
 
 selectBySlug:
 SELECT id, slug, title, description, body, author_id, createdAt, updatedAt
-FROM articles
+FROM products
 WHERE slug = :slug;
 
 slugExists:
 SELECT EXISTS(
   SELECT 1
-  FROM articles
+  FROM products
   WHERE slug= :slug
   LIMIT 1
 );
 
 delete:
-DELETE FROM articles
-WHERE id = :articleId;
+DELETE FROM products
+WHERE id = :productId;

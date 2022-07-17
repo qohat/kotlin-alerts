@@ -5,9 +5,9 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.days
 
 private const val PORT: Int = 8080
-private const val JDBC_URL: String = "jdbc:postgresql://localhost:5432/ktor-arrow-example-database"
+private const val JDBC_URL: String = "jdbc:postgresql://localhost:5432/arrow_app_db"
 private const val JDBC_USER: String = "postgres"
-private const val JDBC_PW: String = "postgres"
+private const val JDBC_PW: String = "haskell"
 private const val JDBC_DRIVER: String = "org.postgresql.Driver"
 private const val AUTH_SECRET: String = "MySuperStrongSecret"
 private const val AUTH_ISSUER: String = "KtorArrowExampleIssuer"
