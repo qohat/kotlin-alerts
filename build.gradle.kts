@@ -4,7 +4,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
     application
     alias(libs.plugins.kotest.multiplatform)
     id(libs.plugins.kotlin.jvm.pluginId)
-    alias(libs.plugins.arrowGradleConfig.formatter)
     alias(libs.plugins.dokka)
     id(libs.plugins.detekt.pluginId)
     alias(libs.plugins.kover)
@@ -13,7 +12,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 }
 
 application {
-    mainClass.set("io.github.qohat.MainKt")
+    mainClass by "io.github.qohat.MainKt"
 }
 
 sqldelight {
@@ -25,21 +24,24 @@ sqldelight {
 
 allprojects {
     extra.set("dokka.outputDirectory", rootDir.resolve("docs"))
-    //setupDetekt()
+    setupDetekt()
 }
 
 repositories {
     mavenCentral()
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
 tasks {
     withType<KotlinCompile>().configureEach {
         kotlinOptions {
-            jvmTarget = "1.8"
+            jvmTarget = "${JavaVersion.VERSION_11}"
             freeCompilerArgs = freeCompilerArgs + "-Xcontext-receivers"
         }
-        sourceCompatibility = "1.8"
-        targetCompatibility = "1.8"
     }
 
     test {
@@ -66,6 +68,7 @@ dependencies {
     implementation(libs.hikari)
     implementation(libs.postgresql)
     implementation(libs.slugify)
+    implementation(libs.bcrypt)
 
     testImplementation(libs.ktor.client.content.negotiation)
     testImplementation(libs.ktor.client.serialization)
