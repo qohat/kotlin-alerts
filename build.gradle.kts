@@ -55,7 +55,6 @@ tasks {
 dependencies {
     implementation(libs.arrow.core)
     implementation(libs.arrow.fx)
-    implementation(libs.kjwt.core)
     implementation(libs.ktor.serialization)
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.cors)
@@ -67,8 +66,7 @@ dependencies {
     implementation(libs.sqldelight.jdbc)
     implementation(libs.hikari)
     implementation(libs.postgresql)
-    implementation(libs.slugify)
-    implementation(libs.bcrypt)
+    implementation(libs.kotlin.kafka)
 
     testImplementation(libs.ktor.client.content.negotiation)
     testImplementation(libs.ktor.client.serialization)
@@ -79,4 +77,12 @@ dependencies {
     testImplementation(libs.kotest.frameworkEngine)
     testImplementation(libs.kotest.assertionsCore)
     testImplementation(libs.kotest.property)
+}
+
+kotlin {
+    sourceSets.all {
+        languageSettings.apply {
+            languageVersion = "1.7"
+        }
+    }
 }

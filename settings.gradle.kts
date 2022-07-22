@@ -1,7 +1,7 @@
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 enableFeaturePreview("VERSION_CATALOGS")
 
-rootProject.name = "arrow-ktor"
+rootProject.name = "kotlin-alerts"
 
 plugins {
     id("com.gradle.enterprise") version "3.10.1"
