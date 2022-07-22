@@ -47,6 +47,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.respond(error: DomainError): 
         is UsernameAlreadyExists -> unprocessable("Username ${error.username} already exists")
         is JwtInvalid -> unprocessable(error.description)
         is CannotGenerateSlug -> unprocessable(error.description)
+        else -> unprocessable("Can't process error")
     }
 
 private suspend inline fun PipelineContext<Unit, ApplicationCall>.unprocessable(

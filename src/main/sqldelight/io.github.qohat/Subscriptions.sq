@@ -1,5 +1,6 @@
 import io.github.qohat.repo.UserId;
 import io.github.qohat.repo.RepoId;
+import java.time.OffsetDateTime;
 
 CREATE TABLE IF NOT EXISTS subscriptions(
     user_id UUID AS UserId REFERENCES users(id) ON DELETE CASCADE NOT NULL,
