@@ -42,10 +42,3 @@ fun Application.userRoutes() = routing {
         }
     }
 }
-
-// TODO improve how we receive models with validation
-private suspend inline fun <reified A : Any> PipelineContext<
-        Unit, ApplicationCall>.receiveCatching(): Either<DomainError, A> =
-    Either.catch { call.receive<A>() }.mapLeft { e ->
-        Unexpected(e.message ?: "Received malformed JSON for ${A::class.simpleName}", e)
-    }

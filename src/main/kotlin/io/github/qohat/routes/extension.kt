@@ -4,6 +4,7 @@ import arrow.core.Either
 import io.github.qohat.*
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.util.pipeline.*
 import kotlinx.serialization.Serializable
@@ -54,3 +55,13 @@ private suspend inline fun PipelineContext<Unit, ApplicationCall>.unprocessable(
 
 private suspend inline fun PipelineContext<Unit, ApplicationCall>.internal(error: String): Unit =
     call.respond(HttpStatusCode.InternalServerError, GenericErrorModel(error))
+
+suspend inline fun <reified A : Any> PipelineContext<
+        Unit, ApplicationCall>.receiveCatching(): Either<DomainError, A> =
+    Either.catch { call.receive<A>() }.mapLeft { e ->
+        Unexpected(e.message ?: "Received malformed JSON for ${A::class.simpleName}", e)
+    }
+
+fun PipelineContext<Unit, ApplicationCall>.receiveParamCatching(param: String): Either<DomainError, String> =
+        Either.fromNullable(call.parameters[param])
+        .mapLeft { InvalidPathParam( "Received malformed or invalid param: $param") }

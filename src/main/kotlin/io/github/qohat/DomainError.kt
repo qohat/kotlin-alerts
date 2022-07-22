@@ -25,4 +25,6 @@ data class JwtInvalid(val description: String) : JwtError
 sealed interface ArticleError: DomainError
 data class CannotGenerateSlug(val description: String) : ArticleError
 
-data class Unexpected(val description: String, val error: Throwable) : UserError
+data class Unexpected(val description: String, val error: Throwable): UserError
+
+data class InvalidPathParam(val description: String): DomainError
