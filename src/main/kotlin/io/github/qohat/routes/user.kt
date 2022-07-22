@@ -37,7 +37,7 @@ fun Application.userRoutes() = routing {
             either<DomainError, UserWrapper<User>> {
                 val (username, email, password) = receiveCatching<UserWrapper<NewUser>>().bind().user
                 val userId = UserService.register(RegisterUser(username, email, password))
-                UserWrapper(User(userId.serial, email, "", username, ""))
+                UserWrapper(User(1L, email, "", username, ""))
             }.respond(HttpStatusCode.Created)
         }
     }

@@ -7,13 +7,15 @@ import arrow.fx.coroutines.continuations.resource
 import arrow.fx.coroutines.fromCloseable
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import io.github.qohat.repo.ProductId
+import io.github.qohat.repo.RepoId
+import io.github.qohat.repo.SlackUserId
 import io.github.qohat.repo.UserId
-import javax.sql.DataSource
 import io.github.qohat.sqldelight.SqlDelight
-import iogithubqohat.Products
+import iogithubqohat.Repositories
+import iogithubqohat.Subscriptions
 import iogithubqohat.Users
 import java.time.OffsetDateTime
+import javax.sql.DataSource
 
 fun hikari(env: Env.DataSource): Resource<HikariDataSource> =
     Resource.fromCloseable {
@@ -32,13 +34,15 @@ fun sqlDelight(dataSource: DataSource): Resource<SqlDelight> = resource {
     SqlDelight.Schema.create(driver)
     SqlDelight(
         driver,
-        Products.Adapter(productIdAdapter, userIdAdapter, offsetDateTimeAdapter, offsetDateTimeAdapter),
-        Users.Adapter(userIdAdapter)
+        Repositories.Adapter(repoIdAdapter),
+        Subscriptions.Adapter(userIdAdapter, repoIdAdapter, offsetDateTimeAdapter),
+        Users.Adapter(userIdAdapter, slackUserIdAdapter)
     )
 }
 
-private val productIdAdapter = columnAdapter(::ProductId, ProductId::serial)
-private val userIdAdapter = columnAdapter(::UserId, UserId::serial)
+private val repoIdAdapter = columnAdapter(::RepoId, RepoId::id)
+private val userIdAdapter = columnAdapter(::UserId, UserId::id)
+private val slackUserIdAdapter = columnAdapter(::SlackUserId, SlackUserId::id)
 private val offsetDateTimeAdapter = columnAdapter(OffsetDateTime::parse, OffsetDateTime::toString)
 
 private inline fun <A : Any, B> columnAdapter(

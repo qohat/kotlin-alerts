@@ -18,7 +18,7 @@ application {
 sqldelight {
     database("SqlDelight") {
         packageName = "io.github.qohat.sqldelight"
-        dialect = "app.cash.sqldelight:postgresql-dialect:2.0.0-alpha02"
+        dialect(libs.sqldelight.postgresql.get())
     }
 }
 
@@ -77,12 +77,4 @@ dependencies {
     testImplementation(libs.kotest.frameworkEngine)
     testImplementation(libs.kotest.assertionsCore)
     testImplementation(libs.kotest.property)
-}
-
-kotlin {
-    sourceSets.all {
-        languageSettings.apply {
-            languageVersion = "1.7"
-        }
-    }
 }
