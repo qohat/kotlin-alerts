@@ -1,4 +1,4 @@
-package io.github.qohat.service
+ package io.github.qohat.service
 
 import arrow.core.Either
 import arrow.core.continuations.EffectScope
