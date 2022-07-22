@@ -3,7 +3,7 @@ package io.github.qohat.env
 import arrow.fx.coroutines.Resource
 import arrow.fx.coroutines.continuations.resource
 import io.github.qohat.repo.UserRepo
-import io.github.qohat.repo.userPersistence
+import io.github.qohat.repo.gituserPersistence
 
 class Dependencies(val userRepo: UserRepo)
 
