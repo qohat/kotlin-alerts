@@ -5,7 +5,8 @@ import io.github.qohat.routes.Subscription
 import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
 
-class UserId(val value: String)
+@JvmInline
+value class UserId(val value: String)
 data class UserSubscription(
     val organization: String,
     val repository: String,
@@ -36,7 +37,8 @@ object SubscriptionService {
             UserId(value = "u2")
         )
     )
-    suspend fun getBy(userId: UserId): List<UserSubscription> = subscriptions
+    suspend fun getBy(userId: UserId): List<UserSubscription> =
+        subscriptions.filter { it.userId == userId }
     suspend fun add(userId: UserId, subscription: Subscription) =
         subscriptions.filterNot {it.userId == userId}
             .plus(
