@@ -30,7 +30,7 @@ data class User(
 
 @Serializable data class LoginUser(val email: String, val password: String)
 
-context(UserRepo)
+/*context(UserRepo)
 fun Application.userRoutes() = routing {
     route("/users") {
         post {
@@ -41,4 +41,4 @@ fun Application.userRoutes() = routing {
             }.respond(HttpStatusCode.Created)
         }
     }
-}
+}*/

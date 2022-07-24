@@ -2,6 +2,7 @@ package io.github.qohat.routes
 
 import arrow.core.*
 import io.github.qohat.IncorrectInput
+import io.github.qohat.service.RegisterRepo
 import io.github.qohat.service.RegisterUser
 
 sealed interface InvalidField {
@@ -28,8 +29,13 @@ private const val MIN_USERNAME_LENGTH = 1
 private const val MAX_USERNAME_LENGTH = 25
 
 fun RegisterUser.validate(): Validated<IncorrectInput, RegisterUser> =
-    username.validUsername()
-        .zip(email.validEmail(), password.validPassword(), ::RegisterUser)
+    slackUserId.validUsername()
+        .zip(slackChannel.validEmail(), ::RegisterUser)
+        .mapLeft(:: IncorrectInput)
+
+fun RegisterRepo.validate(): Validated<IncorrectInput, RegisterRepo> =
+    repository.validEmail()
+        .zip(owner.validUsername(), ::RegisterRepo)
         .mapLeft(:: IncorrectInput)
 
 private fun String.validPassword(): ValidatedNel<InvalidPassword, String> =

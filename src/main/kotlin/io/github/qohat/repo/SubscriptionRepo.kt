@@ -1,11 +1,9 @@
 package io.github.qohat.repo
 
+import arrow.core.Either
+import io.github.qohat.UserError
 import java.util.*
 
-@JvmInline
-value class UserId(val id: UUID)
-@JvmInline
-value class SlackUserId(val id: UUID)
-
 interface SubscriptionRepo {
+    suspend fun insert(userId: String, repositoryId: String): Either<UserError, UserId>
 }

@@ -39,7 +39,7 @@ object SubscriptionService {
     )
     suspend fun getBy(userId: UserId): List<UserSubscription> =
         subscriptions.filter { it.userId == userId }
-    suspend fun add(userId: UserId, subscription: Subscription) =
+    suspend fun update(userId: UserId, subscription: Subscription) =
         subscriptions.filterNot {it.userId == userId}
             .plus(
                 UserSubscription(
@@ -50,6 +50,9 @@ object SubscriptionService {
                 )
             )
     suspend fun delete(userId: UserId) =
+        subscriptions.filterNot {it.userId == userId}
+
+    suspend fun save(userId: UserId) =
         subscriptions.filterNot {it.userId == userId}
 
 }
