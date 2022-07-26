@@ -1,6 +1,7 @@
 package io.github.qohat.service
 
 import io.github.qohat.codec.Codecs
+import io.github.qohat.repo.RepoId
 import io.github.qohat.routes.Subscription
 import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
@@ -52,7 +53,7 @@ object SubscriptionService {
     suspend fun delete(userId: UserId) =
         subscriptions.filterNot {it.userId == userId}
 
-    suspend fun save(userId: UserId) =
+    suspend fun save(userId: UserId, repoId: RepoId) =
         subscriptions.filterNot {it.userId == userId}
 
 }
