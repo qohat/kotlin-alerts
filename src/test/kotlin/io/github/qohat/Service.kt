@@ -4,6 +4,7 @@ import arrow.core.Either
 import arrow.core.left
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
+import io.kotest.assertions.arrow.core.shouldNotBeLeft
 import io.kotest.core.spec.style.FreeSpec
 
 class UserService: FreeSpec({
@@ -12,7 +13,6 @@ class UserService: FreeSpec({
             val expected = "Pure Value"
             val right = Either.Right(expected)
             right shouldBeRight expected
-            right shouldBeLeft expected
         }
 
         "should be left" {
