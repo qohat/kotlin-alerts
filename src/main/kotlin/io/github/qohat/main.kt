@@ -2,8 +2,9 @@ import io.github.qohat.env.Dependencies
 import io.github.qohat.env.Env
 import io.github.qohat.env.configure
 import io.github.qohat.env.dependencies
+import io.github.qohat.repo.RepositoryRepo
+import io.github.qohat.repo.UserRepo
 import io.github.qohat.routes.subscriptionRoutes
-import io.github.qohat.routes.userRoutes
 import io.github.qohat.utils.awaitShutdown
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
@@ -24,5 +25,9 @@ fun main(): Unit = runBlocking(Dispatchers.Default) {
 
 fun Application.app(module: Dependencies) {
     configure()
-    subscriptionRoutes()
+    with(module.userRepo) {
+        with(module.repositoryRepo) {
+            subscriptionRoutes()
+        }
+    }
 }
