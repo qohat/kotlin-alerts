@@ -3,7 +3,7 @@ import io.github.qohat.repo.SlackUserId;
 
 CREATE TABLE IF NOT EXISTS users(
     id UUID AS UserId PRIMARY KEY,
-    slack_user_id UUID AS SlackUserId UNIQUE NOT NULL,
+    slack_user_id VARCHAR(255) AS SlackUserId UNIQUE NOT NULL,
     slack_channel VARCHAR(255) NOT NULL
 );
 

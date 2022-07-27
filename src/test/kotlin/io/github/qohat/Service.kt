@@ -19,6 +19,7 @@ class UserService: FreeSpec({
             val expected = "Left"
             val left = Either.Left(expected)
             left shouldBeLeft expected
+            left shouldNotBeLeft "Leftt"
         }
     }
 })

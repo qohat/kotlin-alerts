@@ -2,8 +2,8 @@ import io.github.qohat.repo.RepoId;
 
 CREATE TABLE IF NOT EXISTS repositories(
     id UUID AS RepoId PRIMARY KEY,
-    owner VARCHAR(255) UNIQUE NOT NULL,
-    repository VARCHAR(255) NOT NULL
+    repository VARCHAR(255) UNIQUE NOT NULL,
+    owner VARCHAR(255) NOT NULL
 );
 
 insertAndGetId:
