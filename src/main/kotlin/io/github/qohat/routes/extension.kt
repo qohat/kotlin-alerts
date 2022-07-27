@@ -41,7 +41,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.respond(error: DomainError): 
         """.trimIndent()
             )
         is EmptyUpdate -> unprocessable(error.description)
-        is EmailAlreadyExists -> unprocessable("${error.email} is already registered")
+        is SlackUserIdAlreadyExists -> unprocessable("${error.id} is already registered")
         is JwtGeneration -> unprocessable(error.description)
         is UserNotFound -> unprocessable("User with ${error.property} not found")
         is UsernameAlreadyExists -> unprocessable("Username ${error.username} already exists")
