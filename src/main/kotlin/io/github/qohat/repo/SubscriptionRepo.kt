@@ -23,6 +23,7 @@ interface SubscriptionRepo {
     suspend fun findBy(repoId: RepoId): List<UserSubscription>
     suspend fun findBy(userId: UserId, repoId: RepoId): UserSubscription?
     suspend fun findAll(): List<UserSubscription>
+    suspend fun delete(userId: UserId, repoId: RepoId)
 }
 
 fun subscriptionRepo(queries: SubscriptionsQueries) = object : SubscriptionRepo {
@@ -48,4 +49,7 @@ fun subscriptionRepo(queries: SubscriptionsQueries) = object : SubscriptionRepo 
 
     override suspend fun findAll(): List<UserSubscription> =
         queries.findAll(::UserSubscription).executeAsList()
+
+    override suspend fun delete(userId: UserId, repoId: RepoId) =
+        queries.delete(userId, repoId)
 }
