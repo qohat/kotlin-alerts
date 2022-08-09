@@ -21,6 +21,7 @@ data class RepositoryAlreadyExists(val repository: String) : RepositoryError
 
 sealed interface SubscriptionError: DomainError
 data class SubscriptionAlreadyExists(val user: String, val repo: String) : SubscriptionError
+data class UserSubscriptionDoesNotExists(val user: String) : SubscriptionError
 
 sealed interface JwtError : DomainError
 data class JwtGeneration(val description: String) : JwtError

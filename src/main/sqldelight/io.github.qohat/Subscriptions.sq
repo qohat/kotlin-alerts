@@ -14,20 +14,28 @@ INSERT INTO subscriptions(user_id, repository_id, type, createdAt)
 VALUES (:user_id, :repository_id, :type, :createdAt);
 
 findByUser:
-SELECT user_id, repository_id, type, createdAt
-FROM subscriptions
-WHERE user_id = :user_id;
+SELECT repositories.owner, repositories.repository, subscriptions.user_id, subscriptions.createdAt FROM subscriptions
+INNER JOIN users ON users.id = subscriptions.user_id
+INNER JOIN repositories ON repositories.id = subscriptions.repository_id
+WHERE subscriptions.user_id = :user_id;
 
 findByRepo:
-SELECT user_id, repository_id, type, createdAt
-FROM subscriptions
+SELECT repositories.owner, repositories.repository, subscriptions.user_id, subscriptions.createdAt FROM subscriptions
+INNER JOIN users ON users.id = subscriptions.user_id
+INNER JOIN repositories ON repositories.id = subscriptions.repository_id
 WHERE repository_id = :repository_id;
 
 findByUserAndRepo:
-SELECT user_id, repository_id, type, createdAt
-FROM subscriptions
+SELECT repositories.owner, repositories.repository, subscriptions.user_id, subscriptions.createdAt FROM subscriptions
+INNER JOIN users ON users.id = subscriptions.user_id
+INNER JOIN repositories ON repositories.id = subscriptions.repository_id
 WHERE user_id = :user_id AND repository_id = :repository_id;
 
 delete:
 DELETE FROM subscriptions
 WHERE user_id = :user_id AND repository_id = :repository_id;
+
+findAll:
+SELECT repositories.owner, repositories.repository, subscriptions.user_id, subscriptions.createdAt FROM subscriptions
+INNER JOIN users ON users.id = subscriptions.user_id
+INNER JOIN repositories ON repositories.id = subscriptions.repository_id;

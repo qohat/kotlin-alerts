@@ -17,6 +17,7 @@ data class Env(
     val dataSource: DataSource = DataSource(),
     val http: Http = Http(),
     val auth: Auth = Auth(),
+    val github: Github = Github()
 ) {
     data class Http(
         val host: String = getenv("HOST") ?: "0.0.0.0",
@@ -34,5 +35,10 @@ data class Env(
         val secret: String = getenv("JWT_SECRET") ?: AUTH_SECRET,
         val issuer: String = getenv("JWT_ISSUER") ?: AUTH_ISSUER,
         val duration: Duration = (getenv("JWT_DURATION")?.toIntOrNull() ?: AUTH_DURATION).days
+    )
+
+    data class Github(
+        val host: String = getenv("GITHUB_HOST") ?: "https://api.github.com",
+        val repos: String = getenv("GITHUB_REPOS_PATH") ?: "repos",
     )
 }

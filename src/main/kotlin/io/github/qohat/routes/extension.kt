@@ -27,7 +27,7 @@ suspend inline fun <reified A : Any> Either<DomainError, A>.respond(status: Http
 @Suppress("ComplexMethod")
 suspend fun PipelineContext<Unit, ApplicationCall>.respond(error: DomainError): Unit =
     when (error) {
-        PasswordNotMatched -> call.respond(HttpStatusCode.Unauthorized)
+        //PasswordNotMatched -> call.respond(HttpStatusCode.Unauthorized)
         is IncorrectInput ->
             unprocessable(
                 error.errors.joinToString { field -> "${field.field}: ${field.errors.joinToString()}" }
@@ -44,7 +44,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.respond(error: DomainError): 
         is SlackUserIdAlreadyExists -> unprocessable("${error.id} is already registered")
         is JwtGeneration -> unprocessable(error.description)
         is UserNotFound -> unprocessable("User with ${error.property} not found")
-        is UsernameAlreadyExists -> unprocessable("Username ${error.username} already exists")
+        //is UsernameAlreadyExists -> unprocessable("Username ${error.username} already exists")
         is JwtInvalid -> unprocessable(error.description)
         is CannotGenerateSlug -> unprocessable(error.description)
         else -> unprocessable("Can not process this.")
