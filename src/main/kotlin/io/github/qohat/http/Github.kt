@@ -10,11 +10,11 @@ import io.ktor.http.*
 
 data class GithubRepo(val owner: String, val name: String)
 
-interface GithubClient {
+interface Github {
     suspend fun exists(repo: GithubRepo): Either<DomainError, Boolean>
 }
 
-fun github(client: HttpClient, github: Env.Github) = object : GithubClient {
+fun github(client: HttpClient, github: Env.Github) = object : Github {
     override suspend fun exists(repo: GithubRepo): Either<DomainError, Boolean> =
         Either.catch {
             client.use { it.get("${github.host}/${github.repos}/${repo.owner}/${repo.name}") }

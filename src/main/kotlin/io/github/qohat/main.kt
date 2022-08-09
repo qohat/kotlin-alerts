@@ -27,7 +27,9 @@ fun Application.app(module: Dependencies) {
     configure()
     with(module.userRepo) {
         with(module.repositoryRepo) {
-            subscriptionRoutes()
+            with(module.subscriptionRepo) {
+                subscriptionRoutes()
+            }
         }
     }
 }
