@@ -1,7 +1,10 @@
 package io.github.qohat.http
 
 import arrow.core.Either
+import arrow.core.filterOrElse
+import arrow.core.identity
 import io.github.qohat.DomainError
+import io.github.qohat.RepositoryDoesNotExists
 import io.github.qohat.Unexpected
 import io.github.qohat.env.Env
 import io.ktor.client.*
@@ -20,6 +23,7 @@ fun github(client: HttpClient, github: Env.Github) = object : Github {
             client.use { it.get("${github.host}/${github.repos}/${repo.owner}/${repo.name}") }
         }
         .mapLeft { t -> Unexpected("Failed calling github endpoint", t) }
-        .map { response -> (response.status ==  HttpStatusCode.OK)}
+        .map {resp -> (resp.status ==  HttpStatusCode.OK) }
+        .filterOrElse({ identity(it) }, { RepositoryDoesNotExists(repo.owner, repo.name) })
 
 }

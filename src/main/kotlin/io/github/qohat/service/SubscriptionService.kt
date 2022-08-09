@@ -1,24 +1,17 @@
 package io.github.qohat.service
 
-import io.github.qohat.codec.Codecs
-import io.github.qohat.repo.*
-import io.github.qohat.routes.Subscription
-import kotlinx.serialization.Serializable
-import java.time.LocalDateTime
+import io.github.qohat.repo.RepoId
+import io.github.qohat.repo.SubscriptionRepo
+import io.github.qohat.repo.UserId
+import io.github.qohat.repo.UserSubscription
+import java.time.OffsetDateTime
 
+context(SubscriptionRepo, DomainErrors)
 object SubscriptionService {
-    context(SubscriptionRepo, DomainErrors)
-    suspend fun getBy(userId: UserId): List<UserSubscription> {
-        TODO()
-    }
-    suspend fun update(userId: UserId, subscription: Subscription) {
-        TODO()
-    }
-    suspend fun delete(userId: UserId) {
-        TODO()
-    }
-    suspend fun save(userId: UserId, repoId: RepoId) {
-        TODO()
-    }
+    suspend fun getBy(userId: UserId): List<UserSubscription> = findBy(userId)
+    suspend fun remove(userId: UserId, repoId: RepoId) =
+        delete(userId, repoId)
+    suspend fun save(userId: UserId, repoId: RepoId) =
+        insert(userId, repoId, "Nothing", OffsetDateTime.now()).bind()
 
 }

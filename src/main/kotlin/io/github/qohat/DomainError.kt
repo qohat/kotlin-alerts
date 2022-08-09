@@ -18,6 +18,7 @@ data class SlackUserIdAlreadyExists(val id: String) : UserError
 
 sealed interface RepositoryError: DomainError
 data class RepositoryAlreadyExists(val repository: String) : RepositoryError
+data class RepositoryDoesNotExists(val owner: String, val repository: String) : RepositoryError
 
 sealed interface SubscriptionError: DomainError
 data class SubscriptionAlreadyExists(val user: String, val repo: String) : SubscriptionError
