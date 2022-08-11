@@ -6,11 +6,15 @@ import io.github.qohat.repo.UserId
 import io.github.qohat.repo.UserSubscription
 import java.time.OffsetDateTime
 
-context(SubscriptionRepo, DomainErrors)
+
 object SubscriptionService {
-    suspend fun getBy(userId: UserId): List<UserSubscription> = findBy(userId)
+    context(SubscriptionRepo, DomainErrors)
+    suspend fun getBy(userId: UserId): List<UserSubscription> =
+        findBy(userId)
+    context(SubscriptionRepo, DomainErrors)
     suspend fun remove(userId: UserId, repoId: RepoId) =
         delete(userId, repoId)
+    context(SubscriptionRepo, DomainErrors)
     suspend fun save(userId: UserId, repoId: RepoId) =
         insert(userId, repoId, "Nothing", OffsetDateTime.now()).bind()
 

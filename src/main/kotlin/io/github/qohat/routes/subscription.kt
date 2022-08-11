@@ -4,10 +4,7 @@ import arrow.core.continuations.either
 import io.github.qohat.codec.Codecs
 import io.github.qohat.http.Github
 import io.github.qohat.http.GithubRepo
-import io.github.qohat.repo.RepositoryRepo
-import io.github.qohat.repo.SubscriptionRepo
-import io.github.qohat.repo.UserId
-import io.github.qohat.repo.UserRepo
+import io.github.qohat.repo.*
 import io.github.qohat.service.*
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -53,7 +50,7 @@ fun Application.subscriptionRoutes() = routing {
         delete("{userId}") {
             either {
                 val id = receiveParamCatching("userId").bind()
-                SubscriptionService.remove(UserId(UUID.fromString(id)))
+                SubscriptionService.remove(UserId(UUID.fromString(id)), RepoId(UUID.randomUUID()))
             }.respond(HttpStatusCode.OK)
         }
         post("/slack/command") {
