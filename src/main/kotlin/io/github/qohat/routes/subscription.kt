@@ -2,10 +2,9 @@ package io.github.qohat.routes
 
 import arrow.core.continuations.either
 import io.github.qohat.codec.Codecs
-import io.github.qohat.repo.RepositoryRepo
-import io.github.qohat.repo.SubscriptionRepo
-import io.github.qohat.repo.UserId
-import io.github.qohat.repo.UserRepo
+import io.github.qohat.http.Github
+import io.github.qohat.http.GithubRepo
+import io.github.qohat.repo.*
 import io.github.qohat.service.*
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -30,7 +29,7 @@ data class NewSubscription(
     val repository: String
 )
 
-context(UserRepo, RepositoryRepo, SubscriptionRepo)
+context(UserRepo, RepositoryRepo, SubscriptionRepo, Github)
 fun Application.subscriptionRoutes() = routing {
     route("subscription") {
         get("{userId}") {
@@ -43,13 +42,15 @@ fun Application.subscriptionRoutes() = routing {
             either {
                 val id = receiveParamCatching("userId").bind()
                 val subscription = receiveCatching<SubscriptionWrapper>().bind().subscription
-                SubscriptionService.update(UserId((UUID.fromString(id)), subscription)
+                exists(GithubRepo(subscription.organization, subscription.repository)).bind()
+                val repoId = RepositoryService.register(RegisterRepo(subscription.repository, subscription.organization))
+                SubscriptionService.save(UserId(UUID.fromString(id)), repoId)
             }.respond(HttpStatusCode.Created)
         }
         delete("{userId}") {
             either {
                 val id = receiveParamCatching("userId").bind()
-                SubscriptionService.delete(UserId(UUID.fromString(id)))
+                SubscriptionService.remove(UserId(UUID.fromString(id)), RepoId(UUID.randomUUID()))
             }.respond(HttpStatusCode.OK)
         }
         post("/slack/command") {

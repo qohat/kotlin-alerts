@@ -1,5 +1,6 @@
 package io.github.qohat.env
 
+import io.ktor.client.HttpClient
 import java.lang.System.getenv
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.days
@@ -17,7 +18,8 @@ data class Env(
     val dataSource: DataSource = DataSource(),
     val http: Http = Http(),
     val auth: Auth = Auth(),
-    val github: Github = Github()
+    val github: Github = Github(),
+    val httpClient: HttpClient = HttpClient()
 ) {
     data class Http(
         val host: String = getenv("HOST") ?: "0.0.0.0",

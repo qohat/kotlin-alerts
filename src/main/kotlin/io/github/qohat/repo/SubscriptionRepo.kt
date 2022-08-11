@@ -11,10 +11,13 @@ import org.postgresql.util.PSQLState
 import java.time.LocalDateTime
 import java.time.OffsetDateTime
 
+@Serializable
 data class UserSubscription(
     val organization: String,
     val repository: String,
+    @Serializable(Codecs.UserIdSerializer::class)
     val userId: UserId,
+    @Serializable(Codecs.OffsetDateTimeSerializer::class)
     val subscribedAt: OffsetDateTime,
 )
 interface SubscriptionRepo {

@@ -1,7 +1,9 @@
 package io.github.qohat.repo
 
 import arrow.core.Either
-import io.github.qohat.*
+import io.github.qohat.RepositoryAlreadyExists
+import io.github.qohat.RepositoryError
+import io.github.qohat.Unexpected
 import iogithubqohat.RepositoriesQueries
 import org.postgresql.util.PSQLException
 import org.postgresql.util.PSQLState
