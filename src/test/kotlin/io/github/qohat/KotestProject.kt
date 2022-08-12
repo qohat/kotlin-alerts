@@ -37,9 +37,7 @@ object KotestProject : AbstractProjectConfig() {
         )
     }
 
-    private val httpClient: HttpClient = HttpClient(CIO)
-
-    private val env: Env by lazy { Env().copy(dataSource = dataSource, httpClient = httpClient) }
+    private val env: Env by lazy { Env().copy(dataSource = dataSource, ) }
 
     val dependencies = TestResource { dependencies(env) }
     private val hikari = TestResource { hikari(env.dataSource) }

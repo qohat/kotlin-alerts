@@ -34,7 +34,7 @@ fun RegisterUser.validate(): Validated<IncorrectInput, RegisterUser> =
         .mapLeft(:: IncorrectInput)
 
 fun RegisterRepo.validate(): Validated<IncorrectInput, RegisterRepo> =
-    repository.validEmail()
+    repository.validUsername()
         .zip(owner.validUsername(), ::RegisterRepo)
         .mapLeft(:: IncorrectInput)
 

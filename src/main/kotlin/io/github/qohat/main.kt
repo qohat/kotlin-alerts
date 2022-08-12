@@ -4,6 +4,7 @@ import io.github.qohat.env.configure
 import io.github.qohat.env.dependencies
 import io.github.qohat.routes.subscriptionRoutes
 import io.github.qohat.utils.awaitShutdown
+import io.ktor.client.HttpClient
 import io.ktor.server.application.Application
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty

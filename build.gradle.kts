@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.hikari)
     implementation(libs.postgresql)
     implementation(libs.kotlin.kafka)
+    implementation(libs.bundles.ktor.client)
 
     testImplementation(libs.bundles.ktor.client)
     testImplementation(libs.testcontainers.postgresql)

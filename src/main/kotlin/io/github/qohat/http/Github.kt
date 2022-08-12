@@ -24,6 +24,6 @@ fun github(client: HttpClient, github: Env.Github) = object : Github {
         }
         .mapLeft { t -> Unexpected("Failed calling github endpoint", t) }
         .map {resp -> (resp.status ==  HttpStatusCode.OK) }
-        .filterOrElse({ identity(it) }, { RepositoryDoesNotExists(repo.owner, repo.name) })
+        .filterOrElse(::identity) { RepositoryDoesNotExists(repo.owner, repo.name) }
 
 }

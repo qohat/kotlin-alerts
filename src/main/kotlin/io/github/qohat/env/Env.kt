@@ -5,7 +5,7 @@ import java.lang.System.getenv
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.days
 
-private const val PORT: Int = 8080
+private const val PORT: Int = 9090
 private const val JDBC_URL: String = "jdbc:postgresql://localhost:5432/arrow_app_db"
 private const val JDBC_USER: String = "postgres"
 private const val JDBC_PW: String = "haskell"
@@ -18,8 +18,7 @@ data class Env(
     val dataSource: DataSource = DataSource(),
     val http: Http = Http(),
     val auth: Auth = Auth(),
-    val github: Github = Github(),
-    val httpClient: HttpClient = HttpClient()
+    val github: Github = Github()
 ) {
     data class Http(
         val host: String = getenv("HOST") ?: "0.0.0.0",
