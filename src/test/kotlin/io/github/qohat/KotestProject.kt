@@ -1,6 +1,9 @@
 package io.github.qohat
 
 import TestResource
+import arrow.fx.coroutines.Resource
+import arrow.fx.coroutines.continuations.ResourceScope
+import arrow.fx.coroutines.continuations.resource
 import io.github.qohat.env.Env
 import io.github.qohat.env.dependencies
 import io.github.qohat.env.hikari
@@ -26,7 +29,7 @@ private class PostgreSQL : PostgreSQLContainer<PostgreSQL>("postgres:latest") {
  * It contains our Test Container configuration which is used in almost all tests.
  */
 object KotestProject : AbstractProjectConfig() {
-    private val postgres = StartablePerProjectListener(PostgreSQL(), "postgres")
+    /*private val postgres = StartablePerProjectListener(PostgreSQL(), "postgres")
 
     private val dataSource: Env.DataSource by lazy {
         Env.DataSource(
@@ -35,11 +38,12 @@ object KotestProject : AbstractProjectConfig() {
             postgres.startable.password,
             postgres.startable.driverClassName
         )
-    }
+    }*/
 
-    private val env: Env by lazy { Env().copy(dataSource = dataSource, ) }
+    private val env: Env by lazy { Env() }
 
     val dependencies = TestResource { dependencies(env) }
+    val kafka = TestResource { KafkaContainer.resource() }
     private val hikari = TestResource { hikari(env.dataSource) }
 
     private val resetDatabaseListener = object : TestListener {
@@ -53,5 +57,5 @@ object KotestProject : AbstractProjectConfig() {
     }
 
     override fun extensions(): List<Extension> =
-        listOf(postgres, hikari, dependencies, resetDatabaseListener)
+        listOf(hikari, dependencies, kafka, resetDatabaseListener)
 }

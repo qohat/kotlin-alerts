@@ -2,7 +2,6 @@ package io.github.qohat.env
 
 import arrow.fx.coroutines.Resource
 import arrow.fx.coroutines.continuations.resource
-import arrow.fx.coroutines.fromCloseable
 import io.github.qohat.http.Github
 import io.github.qohat.http.github
 import io.github.qohat.http.httpClient
@@ -12,7 +11,6 @@ import io.github.qohat.repo.UserRepo
 import io.github.qohat.repo.repositoryRepo
 import io.github.qohat.repo.subscriptionRepo
 import io.github.qohat.repo.userRepo
-import io.ktor.client.HttpClient
 
 class Dependencies(val userRepo: UserRepo, val repositoryRepo: RepositoryRepo, val subscriptionRepo: SubscriptionRepo, val github: Github)
 fun dependencies(env: Env): Resource<Dependencies> = resource {

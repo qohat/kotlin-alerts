@@ -29,6 +29,7 @@ allprojects {
 
 repositories {
     mavenCentral()
+    maven(url = "https://packages.confluent.io/maven/")
 }
 
 java {
@@ -63,6 +64,11 @@ dependencies {
     implementation(libs.kotlin.kafka)
     implementation(libs.bundles.ktor.client)
     implementation(libs.flyway)
+    implementation(libs.kotlin.kafka)
+    implementation(libs.kafka.schema.registry)
+    implementation(libs.kafka.avro.serializer)
+    implementation(libs.avro)
+    implementation(libs.avro4k)
 
     testImplementation(libs.bundles.ktor.client)
     testImplementation(libs.testcontainers.postgresql)

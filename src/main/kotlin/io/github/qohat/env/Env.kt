@@ -1,5 +1,11 @@
 package io.github.qohat.env
 
+import io.github.nomisRev.kafka.Acks
+import io.github.nomisRev.kafka.ProducerSettings
+import io.github.nomisRev.kafka.receiver.AutoOffsetReset
+import io.github.nomisRev.kafka.receiver.ReceiverSettings
+import io.github.qohat.kafka.AvroSerDe
+import kotlinx.serialization.KSerializer
 import java.lang.System.getenv
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.days
@@ -49,5 +55,28 @@ data class Env(
         val server: String = getenv("KAFKA_SERVER") ?: "localhost:9092",
         val subscriptionTopic: String = getenv("SUBSCRIPTION_TOPIC") ?: "subscription-topic",
         val schemaRegistryBaseUrl: String = getenv("SCHEMA_REGISTRY_URL") ?: "http://localhost:8081",
-    )
+    ) {
+        fun <K, V> producerSettings(
+            keyDeserializer: KSerializer<K>,
+            valueDeserializer: KSerializer<V>
+        ): ProducerSettings<K, V> =
+            ProducerSettings(
+                server,
+                AvroSerDe(keyDeserializer),
+                AvroSerDe(valueDeserializer),
+                Acks.All
+            )
+
+        fun <K, V> receiverSettings(
+            keyDeserializer: KSerializer<K>,
+            valueDeserializer: KSerializer<V>
+        ): ReceiverSettings<K, V> =
+            ReceiverSettings(
+                server,
+                AvroSerDe(keyDeserializer),
+                AvroSerDe(valueDeserializer),
+                groupId = "groupId",
+                autoOffsetReset = AutoOffsetReset.Earliest
+            )
+    }
 }

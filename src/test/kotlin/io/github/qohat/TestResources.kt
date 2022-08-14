@@ -8,6 +8,7 @@ import arrow.fx.coroutines.bracketCase
 import arrow.fx.coroutines.continuations.ResourceScope
 import arrow.fx.coroutines.continuations.resource
 import io.kotest.core.listeners.ProjectListener
+import io.kotest.core.listeners.TestListener
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
@@ -58,10 +59,11 @@ class TestResource<A>(private val resource: Resource<A>) :
 
     @Suppress("TooGenericExceptionThrown")
     override fun getValue(thisRef: Any?, property: KProperty<*>): A =
-        value.get().getOrElse { throw RuntimeException("Attempting to access resource beforeProject") }
+        value.get().getOrElse { throw RuntimeException("Attempting to access resource beforeProject $value") }
 
     override suspend fun beforeProject() {
         super.beforeProject()
+        resource.use { println("Qohat $it") }
         value.set(Some(resource.bind()))
     }
 
