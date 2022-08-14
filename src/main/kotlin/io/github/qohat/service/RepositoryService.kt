@@ -1,5 +1,6 @@
  package io.github.qohat.service
 
+import io.github.qohat.DomainErrors
 import io.github.qohat.repo.RepoId
 import io.github.qohat.repo.RepositoryRepo
 import io.github.qohat.routes.validate

@@ -1,5 +1,6 @@
 package io.github.qohat.service
 
+import io.github.qohat.DomainErrors
 import io.github.qohat.repo.RepoId
 import io.github.qohat.repo.SubscriptionRepo
 import io.github.qohat.repo.UserId
