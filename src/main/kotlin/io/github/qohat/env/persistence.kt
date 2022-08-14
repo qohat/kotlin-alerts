@@ -14,6 +14,7 @@ import io.github.qohat.sqldelight.SqlDelight
 import iogithubqohat.Repositories
 import iogithubqohat.Subscriptions
 import iogithubqohat.Users
+import org.flywaydb.core.Flyway
 import java.time.OffsetDateTime
 import javax.sql.DataSource
 
@@ -29,8 +30,10 @@ fun hikari(env: Env.DataSource): Resource<HikariDataSource> =
         )
     }
 
-fun sqlDelight(dataSource: DataSource): Resource<SqlDelight> = resource {
+fun sqlDelight(env: Env): Resource<SqlDelight> = resource {
+    val dataSource = hikari(env.dataSource).bind()
     val driver = Resource.fromCloseable(dataSource::asJdbcDriver).bind()
+    Flyway.configure().dataSource(dataSource).schemas(env.dataSource.schema).load().migrate()
     SqlDelight.Schema.create(driver)
     SqlDelight(
         driver,

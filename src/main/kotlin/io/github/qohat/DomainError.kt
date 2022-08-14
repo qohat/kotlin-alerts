@@ -1,6 +1,7 @@
 package io.github.qohat
 
 import arrow.core.NonEmptyList
+import arrow.core.continuations.EffectScope
 import arrow.core.nonEmptyListOf
 import io.github.qohat.routes.InvalidField
 
@@ -34,3 +35,5 @@ data class CannotGenerateSlug(val description: String) : ArticleError
 data class Unexpected(val description: String, val error: Throwable): UserError, RepositoryError, SubscriptionError
 
 data class InvalidPathParam(val description: String): DomainError
+
+typealias DomainErrors = EffectScope<DomainError>

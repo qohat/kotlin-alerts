@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.postgresql)
     implementation(libs.kotlin.kafka)
     implementation(libs.bundles.ktor.client)
+    implementation(libs.flyway)
 
     testImplementation(libs.bundles.ktor.client)
     testImplementation(libs.testcontainers.postgresql)
