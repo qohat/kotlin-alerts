@@ -1,13 +1,5 @@
 version: '3.9'
 services:
-  arrow-app:
-    image: "arrow-app"
-    depends_on:
-      - postgres
-    environment:
-      POSTGRES_URL: jdbc:postgresql://postgres:5432/arrow_app_db?currentSchema=arrow_app
-    ports:
-      - "8080:8080"
   postgres:
     image: postgres:13.0-alpine
     hostname: postgres

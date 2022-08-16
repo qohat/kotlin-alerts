@@ -63,8 +63,7 @@ data class Env(
             ProducerSettings(
                 server,
                 AvroSerDe(keyDeserializer),
-                AvroSerDe(valueDeserializer),
-                Acks.All
+                AvroSerDe(valueDeserializer)
             )
 
         fun <K, V> receiverSettings(
@@ -75,8 +74,7 @@ data class Env(
                 server,
                 AvroSerDe(keyDeserializer),
                 AvroSerDe(valueDeserializer),
-                groupId = "groupId",
-                autoOffsetReset = AutoOffsetReset.Earliest
+                groupId = "groupId"
             )
     }
 }
