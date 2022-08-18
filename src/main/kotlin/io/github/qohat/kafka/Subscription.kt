@@ -14,9 +14,6 @@ object Subscriptions {
     suspend fun publish(config: Env.Kafka, event: Event) {
         val record = ProducerRecord(config.subscriptionTopic, SubscriptionKey("subscriptions"), event)
         val settings = config.producerSettings(SubscriptionKey.serializer(), Event.serializer())
-        listOf(record)
-            .asFlow()
-            .produce(settings)
-            .collect(::println)
+        producer(record, settings).collect(::println)
     }
 }

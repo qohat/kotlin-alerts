@@ -29,7 +29,7 @@ private class PostgreSQL : PostgreSQLContainer<PostgreSQL>("postgres:latest") {
  * It contains our Test Container configuration which is used in almost all tests.
  */
 object KotestProject : AbstractProjectConfig() {
-    /*private val postgres = StartablePerProjectListener(PostgreSQL(), "postgres")
+    private val postgres = StartablePerProjectListener(PostgreSQL(), "postgres")
 
     private val dataSource: Env.DataSource by lazy {
         Env.DataSource(
@@ -38,11 +38,11 @@ object KotestProject : AbstractProjectConfig() {
             postgres.startable.password,
             postgres.startable.driverClassName
         )
-    }*/
+    }
 
     private val env: Env by lazy { Env() }
 
-    val dependencies = TestResource { dependencies(env) }
+    val dependencies = TestResource { dependencies(env.copy(dataSource)) }
     val kafka = TestResource { KafkaContainer.resource() }
     private val hikari = TestResource { hikari(env.dataSource) }
 
@@ -57,5 +57,5 @@ object KotestProject : AbstractProjectConfig() {
     }
 
     override fun extensions(): List<Extension> =
-        listOf(hikari, dependencies, kafka, resetDatabaseListener)
+        listOf(postgres, hikari, dependencies, kafka, resetDatabaseListener)
 }
